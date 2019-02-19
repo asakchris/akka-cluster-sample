@@ -14,12 +14,14 @@ public class EventMain {
 
         Config config =
                 ConfigFactory.parseString(
-                        "akka.remote.netty.tcp.port=" + port)
+                        //"akka.remote.netty.tcp.port="
+                        "akka.remote.artery.canonical.port="
+                                + port)
                         //.withFallback(ConfigFactory.parseString("akka.cluster.roles = [compute]"))
                         .withFallback(ConfigFactory.load("event"));
 
         ActorSystem system = ActorSystem.create("ClusterSystem", config);
-        ClusterSingletonManagerSettings settings = ClusterSingletonManagerSettings.create(system).withRole("parent");
+        ClusterSingletonManagerSettings settings = ClusterSingletonManagerSettings.create(system);//.withRole("parent");
 
         system.actorOf(EventDetailWorkerCreator.props(), "event-detail-workers");
         system.actorOf(ClusterSingletonManager.props(EventDetailActor.props(), PoisonPill.getInstance(), settings), "EventDetailActor");
