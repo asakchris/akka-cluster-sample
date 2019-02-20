@@ -10,16 +10,18 @@ import com.typesafe.config.ConfigFactory;
 
 public class EventMain {
     public static void main(String[] args) {
-        String port = args[0];
-        System.out.println("port: " + port);
+        /*String port = args[0];
+        System.out.println("port: " + port);*/
 
-        Config config =
+        /*Config config =
                 ConfigFactory.parseString(
                         //"akka.remote.netty.tcp.port="
                         "akka.remote.artery.canonical.port="
                                 + port)
                         //.withFallback(ConfigFactory.parseString("akka.cluster.roles = [compute]"))
-                        .withFallback(ConfigFactory.load("event"));
+                        .withFallback(ConfigFactory.load("event"));*/
+
+        Config config = ConfigFactory.load("event");
 
         ActorSystem system = ActorSystem.create("ClusterSystem", config);
         ClusterSingletonManagerSettings settings = ClusterSingletonManagerSettings.create(system);//.withRole("parent");
