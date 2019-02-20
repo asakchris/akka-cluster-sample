@@ -4,6 +4,7 @@ import akka.actor.ActorSystem;
 import akka.actor.PoisonPill;
 import akka.cluster.singleton.ClusterSingletonManager;
 import akka.cluster.singleton.ClusterSingletonManagerSettings;
+import akka.management.javadsl.AkkaManagement;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -25,5 +26,7 @@ public class EventMain {
 
         system.actorOf(EventDetailWorkerCreator.props(), "event-detail-workers");
         system.actorOf(ClusterSingletonManager.props(EventDetailActor.props(), PoisonPill.getInstance(), settings), "EventDetailActor");
+
+        AkkaManagement.get(system).start();
     }
 }

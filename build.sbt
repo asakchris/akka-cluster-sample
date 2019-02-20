@@ -20,6 +20,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-cluster-tools" % akkaVersion,
   "com.typesafe.akka" %% "akka-multi-node-testkit" % akkaVersion,
 
+  "com.lightbend.akka.management" %% "akka-management" % "1.0.0-RC2",
+  "com.lightbend.akka.management" %% "akka-management-cluster-http" % "1.0.0-RC2",
+
   //test
   "org.scalatest" %% "scalatest" % "3.0.5" % Test, //scala's jUnit equivalent
   "org.scalacheck" %% "scalacheck" % "1.14.0" % Test, //property testing
