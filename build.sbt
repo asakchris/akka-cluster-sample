@@ -8,12 +8,11 @@ enablePlugins(JavaAppPackaging)
 enablePlugins(UniversalPlugin)
 enablePlugins(DockerPlugin)
 
-mainClass in Compile := Some ("sample.cluster.EventMain")
-
 dockerEntrypoint := Seq("bin/akka-cluster-sample")
 dockerRepository := Some("asakchris")
 dockerUpdateLatest := true
 dockerExposedPorts := Seq(2551, 8558)
+dockerEnvVars := Map(("HTTP_BIND_ADDRESS", "0.0.0.0"))
 
 maintainer := "christopher.kamaraj@gmail.com"
 
