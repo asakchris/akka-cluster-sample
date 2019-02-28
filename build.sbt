@@ -3,11 +3,17 @@ name := "akka-cluster-sample"
 version := "0.1"
 
 scalaVersion := "2.12.8"
-lazy val akkaVersion = "2.5.19"
 
-/*lazy val root = (project in file("."))
-  .enablePlugins(MultiJvmPlugin)
-  .configs(MultiJvm)*/
+enablePlugins(JavaAppPackaging)
+enablePlugins(UniversalPlugin)
+enablePlugins(DockerPlugin)
+
+mainClass in Compile := Some ("sample.cluster.EventMain")
+
+lazy val akkaVersion = "2.5.21"
+lazy val akkaManagementVersion = "1.0.0-RC3"
+
+resolvers += Resolver.mavenLocal
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
@@ -20,8 +26,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-cluster-tools" % akkaVersion,
   "com.typesafe.akka" %% "akka-multi-node-testkit" % akkaVersion,
 
-  "com.lightbend.akka.management" %% "akka-management" % "1.0.0-RC2",
-  "com.lightbend.akka.management" %% "akka-management-cluster-http" % "1.0.0-RC2",
+  "com.lightbend.akka.management" %% "akka-management" % akkaManagementVersion,
+  "com.lightbend.akka.management" %% "akka-management-cluster-http" % akkaManagementVersion,
 
   //test
   "org.scalatest" %% "scalatest" % "3.0.5" % Test, //scala's jUnit equivalent
@@ -29,5 +35,4 @@ libraryDependencies ++= Seq(
 
   //logging
   "ch.qos.logback" % "logback-classic" % "1.2.3"
-
 )
