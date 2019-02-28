@@ -15,11 +15,11 @@ public class EventDetailActor extends AbstractLoggingActor {
     private final Cluster cluster = Cluster.get(context().system());
 
     public EventDetailActor() {
-        context().system().scheduler().schedule(Duration.ofSeconds(10), Duration.ofSeconds(10), self(), UUID.randomUUID().toString(), context().system().dispatcher(), self());
+        context().system().scheduler().schedule(Duration.ofSeconds(10), Duration.ofSeconds(60), self(), UUID.randomUUID().toString(), context().system().dispatcher(), self());
     }
 
     @Override
-    public void preStart() throws Exception {
+    public void preStart() {
         cluster.subscribe(self(), ClusterEvent.MemberUp.class);
     }
 
