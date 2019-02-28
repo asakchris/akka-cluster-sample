@@ -27,7 +27,8 @@ public class EventMain {
             System.out.println("hostAddress: " + hostAddress);
             Properties properties = new Properties();
             properties.setProperty("akka.management.http.hostname", hostAddress);
-            properties.setProperty("akka.remote.artery.canonical.hostname", hostAddress);
+            //properties.setProperty("akka.remote.artery.canonical.hostname", hostAddress);
+            properties.setProperty("akka.remote.netty.tcp.hostname", hostAddress);
             config = ConfigFactory.parseProperties(properties).withFallback(ConfigFactory.load());
         }
 

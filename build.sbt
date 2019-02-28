@@ -1,8 +1,8 @@
 name := "akka-cluster-sample"
 
-version := "0.1"
+version := "0.1.1.1-SNAPSHOT"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.6"
 
 enablePlugins(JavaAppPackaging)
 enablePlugins(UniversalPlugin)
