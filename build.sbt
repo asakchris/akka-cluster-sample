@@ -1,6 +1,6 @@
 name := "akka-cluster-sample"
 
-version := "0.1.1.2-SNAPSHOT"
+version := "0.1.1.3-SNAPSHOT"
 
 scalaVersion := "2.12.6"
 

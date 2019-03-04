@@ -27,7 +27,10 @@ public class EventMain {
             config = ConfigFactory.parseProperties(properties).withFallback(ConfigFactory.load());
         }*/
 
-        ActorSystem system = ActorSystem.create("ClusterSystem", config);
+        String actorSystemName = getActorSystemName();
+        System.out.println("actorSystemName: " + actorSystemName);
+
+        ActorSystem system = ActorSystem.create(actorSystemName, config);
         ClusterSingletonManagerSettings settings = ClusterSingletonManagerSettings.create(system);//.withRole("parent");
 
         system.actorOf(EventDetailWorkerCreator.props(), "event-detail-workers");
@@ -38,6 +41,10 @@ public class EventMain {
         if("AWS".equals(envType)) {
             ClusterBootstrap.get(system).start();
         }
+    }
+
+    private static String getActorSystemName() {
+        return System.getProperty("ACTOR_SYSTEM_NAME", "events-eod");
     }
 
     /*private static InetAddress getContainerAddress() {
