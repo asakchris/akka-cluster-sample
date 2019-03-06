@@ -1,6 +1,6 @@
 name := "akka-cluster-sample"
 
-version := "0.1.1.3-SNAPSHOT"
+version := "0.1.1.4-SNAPSHOT"
 
 scalaVersion := "2.12.6"
 
@@ -10,7 +10,7 @@ enablePlugins(DockerPlugin)
 
 dockerEntrypoint := Seq("bin/akka-cluster-sample")
 dockerRepository := Some("asakchris")
-dockerUpdateLatest := true
+//dockerUpdateLatest := true
 dockerExposedPorts := Seq(2552, 8558)
 
 maintainer := "christopher.kamaraj@gmail.com"
@@ -37,9 +37,9 @@ libraryDependencies ++= Seq(
 
   // AWS API - ECS Discovery
   "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % akkaManagementVersion,
-  //"com.lightbend.akka.discovery" %% "akka-discovery-aws-api-async" % akkaManagementVersion,
+  "com.lightbend.akka.discovery" %% "akka-discovery-aws-api-async" % akkaManagementVersion,
   "com.typesafe.akka" %% "akka-discovery" % akkaVersion,
-  "com.lightbend.akka.discovery" %% "akka-discovery-aws-api" % akkaManagementVersion,
+  //"com.lightbend.akka.discovery" %% "akka-discovery-aws-api" % akkaManagementVersion,
 
   //test
   "org.scalatest" %% "scalatest" % "3.0.5" % Test, //scala's jUnit equivalent
