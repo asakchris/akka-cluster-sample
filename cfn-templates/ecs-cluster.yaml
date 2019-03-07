@@ -174,7 +174,7 @@ Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Join ['', [!Ref 'AWS::StackName', -ecs-demo-app]]
+      LogGroupName: !Join ['', ['/ecs/', !Ref 'AWS::StackName', -ecs-demo-app]]
       RetentionInDays: 7
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -190,6 +190,9 @@ Resources:
           Essential: true
           Image: asakchris/akka-cluster-sample:0.1.1.4-SNAPSHOT
           Memory: '256'
+          PortMappings:
+            - ContainerPort: 2552
+            - ContainerPort: 8558
           Environment:
             - Name: JAVA_OPTS
               Value: !Sub '
