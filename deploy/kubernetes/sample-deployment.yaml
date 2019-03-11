@@ -1,0 +1,64 @@
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: sample
+   namespace: default
+   labels:
+     app: sample
+ spec:
+   replicas: 3
+   selector:
+     matchLabels:
+       app: sample
+   template:
+     metadata:
+       labels:
+         app: sample
+       annotations: # Annoations used for Enterprise Suite Metrics
+         "prometheus.io/scrape": "true"
+         "prometheus.io/scheme": "http"
+         "prometheus.io/path": "/metrics"
+         "prometheus.io/port": "9001"
+     spec:
+       serviceAccountName: sample-sa
+       containers:
+       - name: sample
+         image: asakchris/akka-cluster-sample:0.1.1.3-SNAPSHOT
+         ports:
+         - name: akka-remote
+           containerPort: 2551
+         - name: akka-mgmt-http
+           containerPort: 8558
+         - name: prometheus # Used for Enterprise Suite Metrics
+           containerPort: 9001
+           protocol: TCP
+         envFrom:
+         - configMapRef:
+             name: sample-config
+         env:
+           - name: "HTTP_BIND_ADDRESS"
+             value: "0.0.0.0"
+           - name: JAVA_OPTS
+             value: "-Dconfig.resource=k8s.conf -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+           - name: "HOST_ADDRESS"
+             valueFrom:
+               fieldRef:
+                 fieldPath: "status.podIP"
+         resources:
+           requests:
+             memory: "128Mi"
+             cpu: "100m"
+           limits:
+             memory: "1Gi"
+         readinessProbe:
+           httpGet:
+             path: /health/ready
+             port: 8558
+           initialDelaySeconds: 5
+           periodSeconds: 3
+         livenessProbe:
+           httpGet:
+             path: /health/alive
+             port: 8558
+           initialDelaySeconds: 90
+           periodSeconds: 30

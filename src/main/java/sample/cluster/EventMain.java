@@ -38,7 +38,7 @@ public class EventMain {
 
         AkkaManagement.get(system).start();
 
-        if("AWS".equals(envType)) {
+        if("AWS".equals(envType) || "K8S".equals(envType)) {
             ClusterBootstrap.get(system).start();
         }
     }

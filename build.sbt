@@ -11,7 +11,7 @@ enablePlugins(DockerPlugin)
 dockerEntrypoint := Seq("bin/akka-cluster-sample")
 dockerRepository := Some("asakchris")
 dockerUpdateLatest := true
-dockerExposedPorts := Seq(2552, 8558)
+dockerExposedPorts := Seq(2551, 2552, 8558)
 
 maintainer := "christopher.kamaraj@gmail.com"
 
@@ -34,17 +34,17 @@ libraryDependencies ++= Seq(
   // Management
   "com.lightbend.akka.management" %% "akka-management" % akkaManagementVersion,
   "com.lightbend.akka.management" %% "akka-management-cluster-http" % akkaManagementVersion,
-
-  // AWS API - ECS Discovery
+  
   "com.lightbend.akka.management" %% "akka-management-cluster-bootstrap" % akkaManagementVersion,
-  //"com.lightbend.akka.discovery" %% "akka-discovery-aws-api-async" % akkaManagementVersion,
   "com.typesafe.akka" %% "akka-discovery" % akkaVersion,
-  "com.lightbend.akka.discovery" %% "akka-discovery-aws-api" % akkaManagementVersion,
 
   //test
   "org.scalatest" %% "scalatest" % "3.0.5" % Test, //scala's jUnit equivalent
   "org.scalacheck" %% "scalacheck" % "1.14.0" % Test, //property testing
 
   //logging
-  "ch.qos.logback" % "logback-classic" % "1.2.3"
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+
+  // Akka Cluster Bootstrap & Service Discovery
+  "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api" % akkaManagementVersion
 )
